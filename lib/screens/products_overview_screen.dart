@@ -42,7 +42,7 @@ class ProductsOverviewScreen extends StatelessWidget {
         itemCount: loadedProducts.length,
         //receives the context and the index of the item and return a widget for every item
         itemBuilder: (ctx, i) => ProductItem(loadedProducts[i]),
-        // define how the grid sould be structured.
+        // define how the grid should be structured.
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, childAspectRatio: 3 / 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
       ),
