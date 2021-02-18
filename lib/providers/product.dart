@@ -1,7 +1,7 @@
-//Model class POJO
-import 'package:flutter/cupertino.dart';
+//Model class POJO and
+import 'package:flutter/foundation.dart';
 
-class Product {
+class Product with ChangeNotifier {
   final String id;
   final String title;
   final String description;
@@ -15,5 +15,12 @@ class Product {
       @required this.description,
       @required this.price,
       @required this.imageUrl,
-      this.isFavorite});
+      this.isFavorite = false});
+
+
+  //reverse the boolean :)
+  void toggleFavoriteStatus() {
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
 }
