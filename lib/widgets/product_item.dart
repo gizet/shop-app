@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/providers/cart.dart';
+import 'package:shop_app/providers/product.dart';
 import 'package:shop_app/route/routes.dart';
 
-import 'file:///C:/flutterProj/shop_app/lib/providers/product.dart';
 
 class ProductItem extends StatelessWidget {
   // final Product product;
@@ -26,7 +26,7 @@ class ProductItem extends StatelessWidget {
             //     builder: (ctx) => ProductDetailsScreen(),
             //   ),
             // );
-            // PUSHEDNAME WAY
+            // PUSHEDNAME WAY (with pushNamed we can go back!).)
             Navigator.of(context).pushNamed(Routes.PRODUCT_DETAIL_ROUTE, arguments: product.id);
           },
           child: Image.network(
@@ -55,6 +55,8 @@ class ProductItem extends StatelessWidget {
               ),
               onPressed: () {
                 cart.addItem(product.id, product.price, product.title);
+                //ALERT INFO SNACKBAR
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 // estabilsh a connection to the nearest scaffold.
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

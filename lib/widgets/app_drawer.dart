@@ -26,7 +26,15 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pushReplacementNamed(Routes.ORDER_ROUTE);
             },
-          )
+          ),
+          Divider(),
+          ListTile(
+            leading: const Icon(Icons.add),
+            title: Text('Manage Products'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(Routes.USER_PRODUCT_ROUTE);
+            },
+          ),
           // this means that will never add a back button.
         ],
       ),

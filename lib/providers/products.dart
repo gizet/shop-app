@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-
-import 'file:///C:/flutterProj/shop_app/lib/providers/product.dart';
-
 // ChangeNotifier notify the listeners when the data changes.
+import 'package:flutter/material.dart';
+import 'package:shop_app/providers/product.dart';
+
 class Products with ChangeNotifier {
   List<Product> _items = [
     Product(
@@ -52,8 +51,34 @@ class Products with ChangeNotifier {
   }
 
   //
-  void addProduct() {
-    //_items.add(value);
+  void addProduct(Product product) {
+    final newProduct = Product(
+        id: DateTime.now().toString(),
+        title: product.title,
+        price: product.price,
+        description: product.description,
+        imageUrl: product.imageUrl);
+    _items.add(newProduct);
+    notifyListeners();
+  }
+
+  void updateProduct(String id, Product product) {
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+    if (prodIndex >= 0) {
+      _items[prodIndex] = product;
+      notifyListeners();
+    } else {
+      print('Product with id' + id + ' was not updated');
+    }
+  }
+
+  void removeProduct(String id) {
+    //shorterWay
+    _items.removeWhere((prod) => prod.id == id);
+    // final prodIndex = _items.indexWhere((prod) => prod.id == id);
+    // if (prodIndex >= 0) {
+    //   _items.remove(_items[prodIndex]);
+    // }
     notifyListeners();
   }
 

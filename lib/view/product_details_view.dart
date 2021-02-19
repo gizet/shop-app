@@ -9,8 +9,7 @@ class ProductDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //retrive data from our routing action.
-    final productId =
-        ModalRoute.of(context).settings.arguments as String; // this will give us the id from the navigator
+    final productId = ModalRoute.of(context).settings.arguments as String; // this will give us the id from the navigator
     //pro fucking vider.!
     // this widget will not rebuild becasue of listen: false.
     final loadedProduct = Provider.of<Products>(context, listen: false).findById(productId);
