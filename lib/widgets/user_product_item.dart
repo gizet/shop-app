@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/providers/products.dart';
 import 'package:shop_app/route/routes.dart';
 
-import '../providers/product.dart';
-
 class UserProductItem extends StatelessWidget {
   final String id;
   final String title;
@@ -15,6 +13,7 @@ class UserProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
     final productsProvider = Provider.of<Products>(context, listen: false);
     return ListTile(
       title: Text(title),
@@ -30,37 +29,46 @@ class UserProductItem extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: () {
-                //
                 Navigator.of(context).pushNamed(Routes.EDIT_PRODUCT_ROUTE, arguments: id);
               },
-              color: Theme
-                  .of(context)
-                  .primaryColor,
+              color: Theme.of(context).primaryColor,
             ),
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
                 return showDialog(
                     context: context,
-                    builder: (ctx) =>
-                        AlertDialog(
+                    builder: (ctx) => AlertDialog(
                           title: Text('Are you sure?'),
                           content: Text('Do you want to remove the item from the cart?'),
                           actions: [
-                            TextButton(onPressed: () {
-                              productsProvider.removeProduct(id);
-                              Navigator.of(context).pop(true);
-                            }, child: Text('Yes'),),
-                            TextButton(onPressed: () {
-                              Navigator.of(context).pop(false);
-                            }, child: Text('No'))
+                            TextButton(
+                              onPressed: () async {
+                                try {
+                                  await productsProvider.removeProduct(id);
+                                  //Navigator.of(context).pop(true);
+                                  //Navigator.of(context).pop(true);
+                                } catch (error) {
+                                  Navigator.of(ctx).pop(true);
+                                  scaffold.showSnackBar(
+                                    SnackBar(
+                                      content: Text("Deleting failed!"),
+                                    ),
+                                  );
+                                }
+                                Navigator.of(ctx).pop(true);
+                              },
+                              child: Text('Yes'),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(ctx).pop(false);
+                                },
+                                child: Text('No'))
                           ],
-                        )
-                );
+                        ));
               },
-              color: Theme
-                  .of(context)
-                  .errorColor,
+              color: Theme.of(context).errorColor,
             ),
           ],
         ),

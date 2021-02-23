@@ -4,7 +4,21 @@ import 'package:shop_app/providers/orders.dart' show Orders;
 import 'package:shop_app/widgets/app_drawer.dart';
 import 'package:shop_app/widgets/order_item.dart';
 
-class OrdersView extends StatelessWidget {
+class OrdersView extends StatefulWidget {
+  @override
+  _OrdersViewState createState() => _OrdersViewState();
+}
+
+class _OrdersViewState extends State<OrdersView> {
+  //THIS CAN BE MADE WITH FUTURE BUILDER ! :D  See video.
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then(
+      (_) => Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final orderData = Provider.of<Orders>(context);

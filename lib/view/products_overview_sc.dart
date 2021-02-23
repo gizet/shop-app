@@ -1,20 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/providers/cart.dart';
+import 'package:shop_app/providers/products.dart';
 import 'package:shop_app/route/routes.dart';
 import 'package:shop_app/widgets/app_drawer.dart';
 import 'package:shop_app/widgets/badge.dart';
 import 'package:shop_app/widgets/products_grid.dart';
 
-enum FilterOptions { Favorites, All }
-
-class ProductsOverviewView extends StatefulWidget {
+class ProductsOvewrviewScr extends StatefulWidget {
   @override
-  _ProductsOverviewViewState createState() => _ProductsOverviewViewState();
+  _State createState() => _State();
 }
 
-class _ProductsOverviewViewState extends State<ProductsOverviewView> {
+enum FilterOptions { Favorites, All }
+
+class _State extends State<ProductsOvewrviewScr> {
   var _showOnlFavorites = false;
+  var _isInit = false;
+  var _isLoading = false;
+
+  @override
+  void didChangeDependencies() {
+    if (!_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Products>(context).fetchAndSetProducts().then((_) => {
+            setState(() {
+              _isLoading = false;
+            })
+          });
+    }
+    _isInit = true;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +80,7 @@ class _ProductsOverviewViewState extends State<ProductsOverviewView> {
         ],
       ),
       drawer: AppDrawer(),
-      body: ProductsGrid(_showOnlFavorites),
+      body:_isLoading ? Center(child:CircularProgressIndicator()) : ProductsGrid(_showOnlFavorites),
     );
   }
 }

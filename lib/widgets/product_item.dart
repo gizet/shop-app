@@ -43,7 +43,7 @@ class ProductItem extends StatelessWidget {
             icon: Icon(product.isFavorite ? Icons.favorite : Icons.favorite_border),
             color: Theme.of(context).primaryColor,
             onPressed: () {
-              product.toggleFavoriteStatus();
+              product.toggleFavoriteStatus(product.id);
             },
           ),
           //transparent bar

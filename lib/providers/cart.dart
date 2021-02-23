@@ -7,6 +7,13 @@ class CartItem {
   final double price;
 
   CartItem({@required this.id, @required this.title, @required this.quantity, @required this.price});
+
+  //OrderItem
+  static const AMOUNT = 'amount';
+  static const PRODUCTS = 'products';
+  static const DATETIME = 'dateTime';
+
+
 }
 
 class Cart with ChangeNotifier {
@@ -74,4 +81,7 @@ class Cart with ChangeNotifier {
     }
     notifyListeners();
   }
+
+
+
 }
