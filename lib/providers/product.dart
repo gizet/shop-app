@@ -36,7 +36,6 @@ class Product with ChangeNotifier {
       isFavorite = oldStatus;
       notifyListeners();
     }
-
   }
 
   static const TITLE = 'title';
